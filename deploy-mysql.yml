@@ -1,0 +1,23 @@
+---
+- name: Deploy MySQL Database
+  hosts: dbservers
+  become: yes
+
+  tasks:
+    # Update the package cache to ensure we have the latest package information
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    # Install the MySQL server package if it is not already installed
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    # Start the MySQL service and ensure it automatically starts on boot
+    - name: Start and enable MySQL
+      service:
+        name: mysql
+        state: started
+        enabled: yes

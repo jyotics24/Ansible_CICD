@@ -1,0 +1,23 @@
+---
+- name: Deploy NGINX Web Server
+  hosts: webservers
+  become: yes
+
+  tasks:
+    # Update the package cache to ensure we have the latest package information
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    # Install the NGINX web server package if it is not already installed
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    # Start the NGINX service and ensure it automatically starts on boot
+    - name: Start and enable NGINX
+      service:
+        name: nginx
+        state: started
+        enabled: yes
